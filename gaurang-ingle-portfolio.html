@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaurang Ingle — Data Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060C17;
+    --surface: #0D1826;
+    --card: #101F33;
+    --border: #1A3050;
+    --teal: #00D4AA;
+    --teal-dim: #00A882;
+    --gold: #F5A623;
+    --red: #FF4D6D;
+    --blue: #3B82F6;
+    --text: #E8F0F8;
+    --muted: #6B8BA4;
+    --soft: #A8C4DC;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,170,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,170,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6, 12, 23, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--teal); letter-spacing: 0.02em; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 400; transition: color 0.2s; letter-spacing: 0.03em; }
+  .nav-links a:hover { color: var(--teal); }
+  .hero { padding: 100px 0 80px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.2);
+    color: var(--teal); font-size: 0.78rem; font-weight: 500;
+    padding: 6px 14px; border-radius: 100px; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 28px;
+  }
+  .hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--teal); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+  .hero h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.2rem); line-height: 1.05;
+    letter-spacing: -0.02em; margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero-sub {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    color: var(--muted); font-weight: 600; margin-bottom: 28px;
+  }
+  .hero-desc { max-width: 640px; font-size: 1.05rem; line-height: 1.75; color: var(--soft); margin-bottom: 40px; }
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--teal); color: #060C17;
+    padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #00F0C0; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,170,0.3); }
+  .btn-secondary {
+    border: 1px solid var(--border); color: var(--soft);
+    padding: 14px 28px; border-radius: 8px; font-weight: 400; font-size: 0.95rem;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+  .stats-bar {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: 12px;
+    margin: 64px 0; overflow: hidden;
+  }
+  .stat-item { background: var(--surface); padding: 28px 24px; text-align: center; }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--teal); line-height: 1; }
+  .stat-label { color: var(--muted); font-size: 0.82rem; margin-top: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
+  section { padding: 80px 0; }
+  .section-header { margin-bottom: 52px; }
+  .section-tag {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--teal); }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.15; }
+  .section-title span { color: var(--teal); }
+  .caps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .cap-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px; position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .cap-card:hover { border-color: var(--teal); transform: translateY(-4px); }
+  .cap-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--teal); opacity: 0; transition: opacity 0.3s;
+  }
+  .cap-card:hover::before { opacity: 1; }
+  .cap-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 16px;
+  }
+  .cap-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .cap-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+  .cap-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .tag {
+    background: rgba(0,212,170,0.07); border: 1px solid rgba(0,212,170,0.15);
+    color: var(--teal); font-size: 0.72rem; padding: 3px 9px;
+    border-radius: 100px;
+  }
+  .projects-grid { display: grid; gap: 20px; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 32px; display: grid;
+    grid-template-columns: 1fr auto; gap: 24px; align-items: start;
+    transition: border-color 0.3s;
+  }
+  .project-card:hover { border-color: rgba(0,212,170,0.4); }
+  .project-sector { display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; margin-bottom: 10px; }
+  .project-sector .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .project-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .project-desc { font-size: 0.9rem; color: var(--soft); line-height: 1.7; }
+  .project-impact {
+    background: rgba(0,212,170,0.06); border: 1px solid rgba(0,212,170,0.15);
+    border-radius: 8px; padding: 16px 20px; min-width: 180px; text-align: center;
+  }
+  .impact-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+  .impact-value { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--teal); line-height: 1.3; }
+  .sectors-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .sector-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 22px 18px; text-align: center; transition: all 0.3s;
+  }
+  .sector-card:hover { border-color: var(--teal); background: rgba(0,212,170,0.05); }
+  .sector-icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .sector-name { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .sector-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+  .stack-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .stack-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 12px; font-weight: 500; }
+  .stack-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    color: var(--soft); font-size: 0.82rem; padding: 6px 14px; border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .pill:hover { border-color: var(--teal); color: var(--teal); background: rgba(0,212,170,0.05); }
+  .db-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .db-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px; }
+  .db-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .db-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+  .cta-section {
+    background: linear-gradient(135deg, rgba(0,212,170,0.08) 0%, rgba(59,130,246,0.08) 100%);
+    border: 1px solid rgba(0,212,170,0.2);
+    border-radius: 20px; padding: 64px; text-align: center; margin: 0 0 80px;
+  }
+  .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; margin-bottom: 16px; }
+  .cta-section p { color: var(--soft); font-size: 1.05rem; margin-bottom: 36px; max-width: 540px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  footer { border-top: 1px solid var(--border); padding: 32px 0; display: flex; justify-content: space-between; align-items: center; }
+  .footer-text { color: var(--muted); font-size: 0.85rem; }
+  .footer-name { color: var(--teal); font-family: 'Syne', sans-serif; font-weight: 700; }
+  @media (max-width: 900px) {
+    .caps-grid { grid-template-columns: repeat(2, 1fr); }
+    .sectors-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .project-card { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .caps-grid, .db-grid, .stack-grid { grid-template-columns: 1fr; }
+    .sectors-grid { grid-template-columns: repeat(2, 1fr); }
+    .cta-section { padding: 40px 24px; }
+    .container { padding: 0 20px; }
+    nav .nav-links { display: none; }
+    .hero { padding: 60px 0 40px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="nav-logo">GI · Data Science</div>
+    <div class="nav-links">
+      <a href="#capabilities">Capabilities</a>
+      <a href="#projects">Projects</a>
+      <a href="#sectors">Sectors</a>
+      <a href="#stack">Tech Stack</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Available for Projects</div>
+    <h1>Gaurang<br><span>Ingle</span></h1>
+    <p class="hero-sub">Senior Data Scientist &nbsp;·&nbsp; 3+ Years Enterprise Experience</p>
+    <p class="hero-desc">
+      I build end-to-end data intelligence systems — from raw, hard-to-access sources to boardroom-ready insights. Enterprise-grade pipelines, advanced ML, GenAI, Computer Vision, Geo-Spatial analytics, and dynamic dashboards that actually move the needle.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Start a Conversation →</a>
+      <a href="#projects" class="btn-secondary">See Real Projects</a>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">3+</div><div class="stat-label">Years Enterprise Experience</div></div>
+    <div class="stat-item"><div class="stat-num">9</div><div class="stat-label">Core Capability Domains</div></div>
+    <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Industry Sectors Served</div></div>
+    <div class="stat-item"><div class="stat-num">∞</div><div class="stat-label">Data Problems Solvable</div></div>
+  </div>
+</div>
+
+<section id="capabilities">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">What I Do</div>
+      <h2 class="section-title">Enterprise-Grade <span>Capabilities</span></h2>
+    </div>
+    <div class="caps-grid">
+      <div class="cap-card">
+        <div class="cap-icon">📈</div>
+        <div class="cap-title">Advanced Forecasting</div>
+        <div class="cap-desc">Time-series forecasting for any horizon — daily to multi-year. Full ETL with advanced preprocessing, dynamic analysis dashboards, and enterprise-ready delivery. Real govt deployments in agriculture commodity pricing.</div>
+        <div class="cap-tags"><span class="tag">Time Series</span><span class="tag">Long Horizon</span><span class="tag">Dynamic Analysis</span><span class="tag">LSTM</span><span class="tag">External Factors</span></div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🗄️</div>
+        <div class="cap-title">Enterprise Database Design</div>
+        <div class="cap-desc">Architecture-first DB design for high-stakes systems — multi-trader/multi-lot trading architectures, ML workflow schemas, feature stores, and data warehouses engineered for long-term integrity and analytics performance.</div>
+        <div class="cap-tags"><span class="tag">Trading Architecture</span><span class="tag">ML Workflow DB</span><span class="tag">PostgreSQL</span><span class="tag">Data Warehouse</span><span class="tag">Schema Design</span></div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🛰️</div>
+        <div class="cap-title">Geo-Spatial & Satellite Intelligence</div>
+        <div class="cap-desc">LULC analysis, Sentinel satellite data processing, land suitability scoring, organization-specific geo-masters, weather variable extraction for any location, and custom geo-coordinate intelligence systems.</div>
+        <div class="cap-tags"><span class="tag">Sentinel Data</span><span class="tag">LULC</span><span class="tag">Land Score</span><span class="tag">Geo Masters</span><span class="tag">Weather APIs</span></div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🤖</div>
+        <div class="cap-title">Generative AI & LLM Solutions</div>
+        <div class="cap-desc">Custom LLM pipelines, RAG systems, multi-modal AI agents, document intelligence, conversational AI, automated report generation, and domain-specific fine-tuning. Full products, not just API wrappers.</div>
+        <div class="cap-tags"><span class="tag">RAG</span><span class="tag">Agents</span><span class="tag">Multi-Modal</span><span class="tag">Fine-Tuning</span><span class="tag">Doc Intelligence</span></div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">👁️</div>
+        <div class="cap-title">Computer Vision</div>
+        <div class="cap-desc">End-to-end CV systems: image classification, object detection and counting, instance/semantic segmentation, face recognition, and OCR. Deployed at Tata Steel (rod counting), poultry farms (bird age detection), and healthcare (mammogram classification).</div>
+        <div class="cap-tags"><span class="tag">Detection</span><span class="tag">Segmentation</span><span class="tag">OCR</span><span class="tag">Face Recognition</span><span class="tag">Counting</span></div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🎙️</div>
+        <div class="cap-title">Audio Intelligence</div>
+        <div class="cap-desc">Speech recognition in noisy environments, multilingual ASR (all Indian languages), speaker diarization, audio event detection, and real-time audio pipelines. Deployed for Indian Railways for safety-critical loco pilot communications.</div>
+        <div class="cap-tags"><span class="tag">Multilingual ASR</span><span class="tag">Noise Robustness</span><span class="tag">Transcription</span><span class="tag">Diarization</span></div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">📊</div>
+        <div class="cap-title">Advanced Analytics & BI</div>
+        <div class="cap-desc">Enterprise-level analysis answering stakeholder questions and surfacing unseen patterns. Includes external factor scraping, full ETL pipelines, and dynamic Power BI dashboards for real-time executive visibility.</div>
+        <div class="cap-tags"><span class="tag">PostgreSQL</span><span class="tag">Power BI</span><span class="tag">ETL</span><span class="tag">External Scraping</span><span class="tag">Stakeholder Dashboards</span></div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🎯</div>
+        <div class="cap-title">Predictive Modeling</div>
+        <div class="cap-desc">Binary classification, multi-class prediction, and regression — all with enterprise dynamic analysis, proper ETL, and stakeholder-facing explainability. Deployed at PepsiCo for factory machine failure prediction.</div>
+        <div class="cap-tags"><span class="tag">Classification</span><span class="tag">Regression</span><span class="tag">Multi-Class</span><span class="tag">SHAP</span><span class="tag">Explainability</span></div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🔵</div>
+        <div class="cap-title">Clustering & Segmentation</div>
+        <div class="cap-desc">Customer segmentation, operational grouping, anomaly detection — with full preprocessing pipelines and dynamic visual analysis so your teams can act on what's discovered, not just see it.</div>
+        <div class="cap-tags"><span class="tag">K-Means</span><span class="tag">DBSCAN</span><span class="tag">Hierarchical</span><span class="tag">Segmentation</span></div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🔄</div>
+        <div class="cap-title">Automated Data Pipelines</div>
+        <div class="cap-desc">Can't access the data your team needs daily? I build automated solutions to harvest data from difficult sources — historical and recurring — storing it in structured, query-ready databases.</div>
+        <div class="cap-tags"><span class="tag">Web Scraping</span><span class="tag">Scheduling</span><span class="tag">DB Storage</span><span class="tag">Historical Backfill</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top: 0;">
+  <div class="container">
+    <div class="section-header" style="margin-bottom: 32px;">
+      <div class="section-tag">Infrastructure</div>
+      <h2 class="section-title">Enterprise <span>Database Design</span></h2>
+      <p style="color:var(--muted); margin-top: 12px; max-width: 580px; font-size: 0.95rem; line-height: 1.7;">From complex trading architectures to ML workflow databases — I design the data infrastructure that high-performance business systems are built on.</p>
+    </div>
+    <div class="db-grid">
+      <div class="db-card">
+        <div class="db-title">⚡ Trading System Architecture</div>
+        <div class="db-desc">Complex trading DB designs: 1-lot/1-trader bidding, 1-lot/multi-trader allocation, order book management, position tracking, P&L reconciliation, and settlement schemas for multiple trading architectures.</div>
+      </div>
+      <div class="db-card">
+        <div class="db-title">🧠 ML Project Databases</div>
+        <div class="db-desc">Purpose-built schemas for forecasting workflows, prediction pipelines, GenAI experiment tracking, feature stores, model registries, and audit trails — designed for repeatability and production reliability.</div>
+      </div>
+      <div class="db-card">
+        <div class="db-title">🏢 Business Systems DB Design</div>
+        <div class="db-desc">End-to-end relational and analytical database design for CRMs, operational platforms, and reporting warehouses. Designed for scale, query performance, and long-term maintainability.</div>
+      </div>
+      <div class="db-card">
+        <div class="db-title">🔁 Data Warehouse & ETL Design</div>
+        <div class="db-desc">Star/snowflake schema design, incremental load strategies, partitioning for analytics workloads, and Power BI-ready data model design so your dashboards run fast at scale.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Track Record</div>
+      <h2 class="section-title">Real <span>Projects</span> Delivered</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div>
+          <div class="project-sector" style="color: #A78BFA;"><span class="dot" style="background:#A78BFA;"></span>EdTech · AI Tutor Platform</div>
+          <div class="project-title">AI Tutor — Student Attention, Emotion & Learning Intelligence System</div>
+          <div class="project-desc">Built a full-stack AI tutor platform that monitors student engagement during recorded lectures via real-time behaviour detection (attentiveness, eye contact, smile, neutral, drowsy). If drowsiness detected, the video auto-pauses and prompts a break. After each lecture, the system generates spoken Q&A — the student answers verbally, and AI evaluates confidence, accuracy, grammar, and areas to improve. Also includes a multimodal chatbot where students screenshot confusing lecture frames and ask questions — answered contextually from the lecture content. Additionally generates a personalized resume tailored to a provided JD to boost shortlisting chances.</div>
+          <div class="cap-tags" style="margin-top:14px;"><span class="tag">Emotion Detection</span><span class="tag">Attention Tracking</span><span class="tag">Speech Analysis</span><span class="tag">RAG Chatbot</span><span class="tag">Resume Gen AI</span><span class="tag">Multimodal LLM</span></div>
+        </div>
+        <div class="project-impact">
+          <div class="impact-label">Domain</div>
+          <div class="impact-value">EdTech<br>Gen-AI</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div>
+          <div class="project-sector" style="color: #F87171;"><span class="dot" style="background:#F87171;"></span>Healthcare · Breast Cancer Detection</div>
+          <div class="project-title">Breast Cancer Classification from Indian Hospital Mammogram Images</div>
+          <div class="project-desc">Developed a breast cancer detection model trained on mammogram images sourced directly from Indian hospitals and manually annotated by medical experts — achieving 100% annotation accuracy with zero overfitting. Custom data collection and annotation pipeline, specialized preprocessing for mammogram quality, and a clinically validated model built for real-world diagnostic assistance in Indian healthcare settings.</div>
+          <div class="cap-tags" style="margin-top:14px;"><span class="tag">Medical Imaging</span><span class="tag">Mammogram</span><span class="tag">Expert Annotation</span><span class="tag">Image Classification</span><span class="tag">India-Specific Data</span></div>
+        </div>
+        <div class="project-impact">
+          <div class="impact-label">Domain</div>
+          <div class="impact-value">Healthcare<br>AI</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div>
+          <div class="project-sector" style="color: #FCD34D;"><span class="dot" style="background:#FCD34D;"></span>Horticulture · Poultry Farm Management</div>
+          <div class="project-title">Age-Based Chicken Detection & Counting for Automated Poultry Management</div>
+          <div class="project-desc">Built a computer vision system to detect and count chickens on poultry farms — distinguishing birds at 7, 14, and 30 days of age (short life-cycle breeds). Since counting ~200 birds manually per age group is highly error-prone and time-consuming, this system automates age-based population counting, enabling farm managers to efficiently route birds to the correct sections for feeding, health monitoring, and stage-appropriate management — maximizing farm efficiency and reducing losses.</div>
+          <div class="cap-tags" style="margin-top:14px;"><span class="tag">Object Detection</span><span class="tag">Age Classification</span><span class="tag">Counting</span><span class="tag">Poultry CV</span><span class="tag">Farm Automation</span></div>
+        </div>
+        <div class="project-impact">
+          <div class="impact-label">Domain</div>
+          <div class="impact-value">AgriTech<br>Poultry</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div>
+          <div class="project-sector" style="color: #FF4D6D;"><span class="dot" style="background:#FF4D6D;"></span>Government · Indian Railways</div>
+          <div class="project-title">Multilingual Audio Transcription for Railway Safety</div>
+          <div class="project-desc">Built a robust speech recognition system for Indian Railways loco pilots — transcribing any Indian language under extreme noise conditions (engine sounds, radio static) to prevent railway accidents by accurately capturing safety-critical communications.</div>
+          <div class="cap-tags" style="margin-top:14px;"><span class="tag">Multilingual ASR</span><span class="tag">Noise Robustness</span><span class="tag">Safety-Critical</span><span class="tag">All Indian Languages</span></div>
+        </div>
+        <div class="project-impact">
+          <div class="impact-label">Domain</div>
+          <div class="impact-value">Public<br>Safety</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div>
+          <div class="project-sector" style="color: #00D4AA;"><span class="dot" style="background:#00D4AA;"></span>State Government · Agriculture</div>
+          <div class="project-title">Commodity Price Forecasting for Farmer Profitability</div>
+          <div class="project-desc">Delivered a state-government agriculture initiative forecasting commodity prices at multiple horizons — empowering farmers with optimal sowing-date recommendations to maximize market profits. Includes external factor analysis and dynamic stakeholder dashboards.</div>
+          <div class="cap-tags" style="margin-top:14px;"><span class="tag">Price Forecasting</span><span class="tag">Agriculture</span><span class="tag">External Factors</span><span class="tag">GovTech</span></div>
+        </div>
+        <div class="project-impact">
+          <div class="impact-label">Domain</div>
+          <div class="impact-value">AgriFinance<br>/ GovTech</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div>
+          <div class="project-sector" style="color: #F5A623;"><span class="dot" style="background:#F5A623;"></span>Manufacturing · PepsiCo</div>
+          <div class="project-title">Factory Sensor Data → Machine Downtime Prediction</div>
+          <div class="project-desc">Built an end-to-end IoT sensor data pipeline and predictive ML model to anticipate machine failures on PepsiCo factory floors — enabling proactive maintenance and minimizing costly unplanned production downtime.</div>
+          <div class="cap-tags" style="margin-top:14px;"><span class="tag">IoT Sensors</span><span class="tag">Predictive Maintenance</span><span class="tag">Time Series</span><span class="tag">ETL</span></div>
+        </div>
+        <div class="project-impact">
+          <div class="impact-label">Domain</div>
+          <div class="impact-value">Industrial<br>Manufacturing</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div>
+          <div class="project-sector" style="color: #3B82F6;"><span class="dot" style="background:#3B82F6;"></span>Steel Industry · Tata Steel</div>
+          <div class="project-title">Computer Vision for Steel Rod Detection & Counting</div>
+          <div class="project-desc">Deployed a real-time computer vision system at Tata Steel to automatically count and detect steel rods on production lines — eliminating manual counting errors and accelerating QC and inventory tracking at scale.</div>
+          <div class="cap-tags" style="margin-top:14px;"><span class="tag">Object Detection</span><span class="tag">Counting</span><span class="tag">Real-time CV</span><span class="tag">Quality Control</span></div>
+        </div>
+        <div class="project-impact">
+          <div class="impact-label">Domain</div>
+          <div class="impact-value">Heavy<br>Industry</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div>
+          <div class="project-sector" style="color: #84CC16;"><span class="dot" style="background:#84CC16;"></span>Geo-Spatial · Land Intelligence</div>
+          <div class="project-title">Land Suitability Scoring via Satellite & Geo Data</div>
+          <div class="project-desc">Built a land suitability intelligence system combining Sentinel satellite imagery, LULC classification, weather variable extraction, and custom geo-coordinate masters — scoring land parcels for agricultural, industrial, or developmental suitability.</div>
+          <div class="cap-tags" style="margin-top:14px;"><span class="tag">Sentinel</span><span class="tag">LULC</span><span class="tag">Land Score</span><span class="tag">Geo Master</span><span class="tag">Weather Data</span></div>
+        </div>
+        <div class="project-impact">
+          <div class="impact-label">Domain</div>
+          <div class="impact-value">Geo-Spatial<br>Intelligence</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sectors" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Industry Reach</div>
+      <h2 class="section-title">Sectors <span>Served</span></h2>
+    </div>
+    <div class="sectors-grid">
+      <div class="sector-card"><div class="sector-icon">🐔</div><div class="sector-name">Poultry & Horticulture</div><div class="sector-desc">Age-based bird counting, farm automation, livestock CV</div></div>
+      <div class="sector-card"><div class="sector-icon">🏦</div><div class="sector-name">Finance & Banking</div><div class="sector-desc">Trading systems, risk models, price forecasting</div></div>
+      <div class="sector-card"><div class="sector-icon">🌾</div><div class="sector-name">Agriculture</div><div class="sector-desc">Commodity forecasting, crop intelligence, satellite land scoring</div></div>
+      <div class="sector-card"><div class="sector-icon">🚂</div><div class="sector-name">Government & Railways</div><div class="sector-desc">Safety systems, public infrastructure analytics</div></div>
+      <div class="sector-card"><div class="sector-icon">🏭</div><div class="sector-name">Manufacturing</div><div class="sector-desc">Sensor analytics, downtime prediction, quality control</div></div>
+      <div class="sector-card"><div class="sector-icon">🏥</div><div class="sector-name">Healthcare</div><div class="sector-desc">Medical imaging, diagnostics AI, patient analytics</div></div>
+      <div class="sector-card"><div class="sector-icon">🛍️</div><div class="sector-name">Retail & E-Commerce</div><div class="sector-desc">Demand forecasting, segmentation, pricing intelligence</div></div>
+      <div class="sector-card"><div class="sector-icon">📚</div><div class="sector-name">EdTech</div><div class="sector-desc">Learning analytics, personalization, performance AI</div></div>
+      <div class="sector-card"><div class="sector-icon">🌍</div><div class="sector-name">Environment & Land</div><div class="sector-desc">LULC, satellite data, geo & land intelligence</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Toolkit</div>
+      <h2 class="section-title">Technology <span>Stack</span></h2>
+    </div>
+    <div class="stack-grid">
+      <div>
+        <div style="margin-bottom:28px;">
+          <div class="stack-label">Data & Analytics</div>
+          <div class="stack-pills"><span class="pill">Python</span><span class="pill">PostgreSQL</span><span class="pill">SQL</span><span class="pill">Pandas</span><span class="pill">NumPy</span><span class="pill">Polars</span><span class="pill">Power BI</span><span class="pill">Apache Airflow</span></div>
+        </div>
+        <div style="margin-bottom:28px;">
+          <div class="stack-label">Machine Learning</div>
+          <div class="stack-pills"><span class="pill">Scikit-learn</span><span class="pill">XGBoost</span><span class="pill">LightGBM</span><span class="pill">Prophet</span><span class="pill">ARIMA/SARIMA</span><span class="pill">LSTM</span></div>
+        </div>
+        <div>
+          <div class="stack-label">Generative AI & LLMs</div>
+          <div class="stack-pills"><span class="pill">LangChain</span><span class="pill">LlamaIndex</span><span class="pill">OpenAI API</span><span class="pill">Hugging Face</span><span class="pill">RAG</span><span class="pill">Fine-Tuning</span><span class="pill">Vector DBs</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="margin-bottom:28px;">
+          <div class="stack-label">Computer Vision & Audio</div>
+          <div class="stack-pills"><span class="pill">PyTorch</span><span class="pill">TensorFlow</span><span class="pill">YOLOv8</span><span class="pill">OpenCV</span><span class="pill">Whisper</span><span class="pill">Wav2Vec</span><span class="pill">Tesseract OCR</span></div>
+        </div>
+        <div style="margin-bottom:28px;">
+          <div class="stack-label">Geo-Spatial</div>
+          <div class="stack-pills"><span class="pill">GeoPandas</span><span class="pill">GDAL</span><span class="pill">Sentinel Hub API</span><span class="pill">QGIS</span><span class="pill">Rasterio</span><span class="pill">PostGIS</span></div>
+        </div>
+        <div>
+          <div class="stack-label">Data Collection</div>
+          <div class="stack-pills"><span class="pill">BeautifulSoup</span><span class="pill">Scrapy</span><span class="pill">Selenium</span><span class="pill">Playwright</span><span class="pill">REST APIs</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container" id="contact">
+  <div class="cta-section">
+    <h2>Have a Data Problem?<br><span style="color:var(--teal)">Let's Solve It.</span></h2>
+    <p>Whether it's a complex forecasting challenge, a production CV system, a GenAI product, or mission-critical database architecture — I deliver enterprise-quality solutions that generate real business value.</p>
+    <div class="cta-btns">
+      <a href="/cdn-cgi/l/email-protection#abcccaded9cac5ccebced3cac6dbc7ce85c8c4c6" class="btn-primary">📩 Get in Touch</a>
+      <a href="#capabilities" class="btn-secondary">Review Capabilities</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <footer>
+    <div class="footer-text"><span class="footer-name">Gaurang Ingle</span> &nbsp;·&nbsp; Data Scientist &nbsp;·&nbsp; 3+ Years Enterprise Experience</div>
+    <div class="footer-text" style="color: var(--border);">Enterprise ML · GenAI · CV · Geo-Spatial · Audio AI
